@@ -282,6 +282,7 @@ int main(int argc, const char * argv[]){
             fprintf(stderr, "Needed run %d simulations to get %d with a recombination event within the specified bounds.\n", totalSimCount, i);
         }
 	free(currentTrajectory);
+	free(currentTrajectoryTime);
 	free(currentSize);
 	return(0);
 }

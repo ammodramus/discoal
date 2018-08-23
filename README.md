@@ -1,4 +1,6 @@
 # discoal
+(This is a minor fork of discoal that concatenates various output data into a single file printed to stdout.)
+
 discoal is a coalescent simulation program capable of simulating models with recombination, selective sweeps, and demographic changes including population splits and admixture events.
 
 To install discoal, clone this repository, cd into the directory, then assuming you have gcc and make installed on your system, simply type `make discoal`.
@@ -48,4 +50,3 @@ parameters:
 	 -T (tree output mode)
 	 -d seed1 seed2 (set random number generator seeds)
 ```
-test

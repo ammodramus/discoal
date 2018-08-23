@@ -956,7 +956,8 @@ double initialFreq, double *finalFreq, double alpha, double f0, double currentTi
 				printf("trajectory too bigly. step= %ld freq = %f. killing myself gently\n",j, x);
 				exit(1);
 			}
-			currentTrajectory[j++]=x;
+			currentTrajectory[j]=x;
+			currentTrajectoryTime[j++]=currentTime+ttau;
 		}
 	}
 	currentTrajectoryStep=0;
@@ -2056,7 +2057,7 @@ void makeGametesMS(int argc,const char *argv[]){
 	
 	mutNumber = size;
 	qsort(allMuts, size, sizeof(allMuts[0]), compare_doubles);
-	printf("\n//\nsegsites: %d",mutNumber);
+	printf("\nsegsites: %d",mutNumber);
 	if(mutNumber > 0) printf("\npositions: ");
 	for(i = 0; i < mutNumber; i++)
 		fprintf(stdout,"%6.6lf ",allMuts[i] );

@@ -54,7 +54,11 @@ int main(int argc, const char * argv[]){
 	i = 0;
         totalSimCount = 0;
 	currentTrajectory = malloc(sizeof(float) * TRAJSTEPSTART);
+    if(!currentTrajectory){fprintf(stderr, "out of memory allocating currentTrajectory");}
 	assert(currentTrajectory);
+	currentTrajectoryTime = malloc(sizeof(float) * TRAJSTEPSTART);
+    if(!currentTrajectoryTime){fprintf(stderr, "out of memory allocating currentTrajectoryTime");}
+	assert(currentTrajectoryTime);
 
 	while(i < sampleNumber){
 		currentTime=0;
@@ -128,6 +132,11 @@ int main(int argc, const char * argv[]){
 					probAccept = proposeTrajectory(currentEventNumber, currentTrajectory, currentSize, sweepMode, currentFreq, &currentFreq, alpha, f0, currentTime);
 					//printf("probAccept: %lf\n",probAccept);
 				}
+                // print trajectory here
+                printf("\n//\nFrequency Trace:\n\n");
+                for(k = 0; k < totalTrajectorySteps; k++){
+                    printf("%f\t%f\t%f\n", currentTrajectoryTime[k], currentTrajectory[k], 1.0-currentTrajectory[k]);
+                }
 				
 				currentTime = sweepPhaseEventsConditionalTrajectory(&breakPoints[0], currentTime, nextTime, sweepSite, \
 					 currentFreq, &currentFreq, &activeSweepFlag, alpha, currentSize, sweepMode, f0, uA);
@@ -234,31 +243,27 @@ int main(int argc, const char * argv[]){
 			dropMutationsUntilTime(uTime);	
 
 		if(condRecMode == 0){
-			if(treeOutputMode == 1){
-				//output newick trees
-				qsort(breakPoints, breakNumber, sizeof(breakPoints[0]), compare_floats);
-				lastBreak = 0;
-				printf("\n//\n");
-				for(k=0;k<breakNumber;k++){
-					tempSite = ((float) breakPoints[k] / nSites) - (0.5/nSites) ; //padding
+			//if(treeOutputMode == 1){
+            //output newick trees
+            qsort(breakPoints, breakNumber, sizeof(breakPoints[0]), compare_floats);
+            lastBreak = 0;
+            printf("\n");
+            for(k=0;k<breakNumber;k++){
+                tempSite = ((float) breakPoints[k] / nSites) - (0.5/nSites) ; //padding
 
-					if(breakPoints[k] - lastBreak > 0){
-						printf("[%d]",breakPoints[k] - lastBreak);
-						printTreeAtSite(tempSite); 
-						lastBreak = breakPoints[k];
-					}
-				}
-				printf("[%d]",nSites- lastBreak);
-				printTreeAtSite(1.0 - (1.0/nSites)); 
+                if(breakPoints[k] - lastBreak > 0){
+                    printf("[%d]",breakPoints[k] - lastBreak);
+                    printTreeAtSite(tempSite); 
+                    lastBreak = breakPoints[k];
+                }
+            }
+            printf("[%d]",nSites- lastBreak);
+            printTreeAtSite(1.0 - (1.0/nSites)); 
 
-			}
-			else{
-				//Hudson style output
-				//errorCheckMutations();
-				makeGametesMS(argc,argv);
-			}
-			//printf("rep: %d\n",i);
-                        i++;
+            // always make ms output (PW)
+            //Hudson style output
+            makeGametesMS(argc,argv);
+            i++;
 		}
 		else{
 			if(condRecMet == 1){

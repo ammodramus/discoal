@@ -119,6 +119,7 @@ int EFFECTIVE_POPN_SIZE;
 #define TRAJSTEPSTART 5000000000
 long int  maxTrajSteps;
 float *currentTrajectory;
+float *currentTrajectoryTime;
 long int currentTrajectoryStep, totalTrajectorySteps;
 
 struct event events[MAXEVENTS];

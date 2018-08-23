@@ -7,6 +7,8 @@ all: discoal
 #
 
 
+debug: discoal_multipop.c discoalFunctions.c discoal.h discoalFunctions.h
+	$(CC) $(CFLAGS) -g  -o discoal discoal_multipop.c discoalFunctions.c ranlibComplete.c alleleTraj.c -lm
 
 discoal: discoal_multipop.c discoalFunctions.c discoal.h discoalFunctions.h
 	$(CC) $(CFLAGS)  -o discoal discoal_multipop.c discoalFunctions.c ranlibComplete.c alleleTraj.c -lm

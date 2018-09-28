@@ -9,7 +9,7 @@
 /* like that                                                                  */
 
 #define MAXNODES 20000000
-#define MAXSITES 220020
+#define MAXSITES 10000000
 #define SMALLCHUNKS 100000
 #define MAXBREAKS 1000000
 #define MAXMUTS 40000
